@@ -1,6 +1,8 @@
 import os
 import unittest
 
+from datetime import datetime, timedelta
+
 from spaceone.core.unittest.runner import RichTestRunner
 from spaceone.tester import TestCase, print_json
 
@@ -30,8 +32,8 @@ class TestLog(TestCase):
             'aws_access_key_id': AKI,
             'aws_secret_access_key': SAK
         }
-        resource_stream = self.monitoring.DataSource.verify({'options':options,
-                                                             'secret_data':secret_data})
+        resource_stream = self.monitoring.DataSource.verify({'options': options,
+                                                             'secret_data': secret_data})
         for res in resource_stream:
             print_json(res)
  
@@ -42,10 +44,18 @@ class TestLog(TestCase):
             'aws_secret_access_key': SAK
         }
         filter = {}
-        resource = 'arn:aws:ec2:ap-northeast-2:072548720675:instance/i-08c5592e084b24e20'
-        resource_stream = self.monitoring.Log.list({'options':options,
-                                                    'secret_data':secret_data,
-                                                    'filter':filter,
+        end = datetime.utcnow()
+        start = end - timedelta(days=10)
+        resource = {
+            'lookup_attribtes': [{
+                'AttributeKey': ''
+            }]
+        }
+        resource_stream = self.monitoring.Log.list({'options': options,
+                                                    'secret_data': secret_data,
+                                                    'filter': filter,
+                                                    'start': start,
+                                                    'end': end,
                                                     'resource': resource})
         print(resource_stream)
 

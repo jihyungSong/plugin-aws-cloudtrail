@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 import logging
 
 from spaceone.api.monitoring.plugin import log_pb2, log_pb2_grpc
 from spaceone.core.pygrpc import BaseAPI
-from spaceone.core.pygrpc.message_type import *
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class Log(BaseAPI, log_pb2_grpc.LogServicer):
 
@@ -22,7 +21,6 @@ class Log(BaseAPI, log_pb2_grpc.LogServicer):
                     'resource_type': (resource['resource_type']),
                     'actions': resource['actions'],
                     'result': resource['result']
-
                 }
                 _LOGGER.debug(f'[list] LogResponse: {res}')
                 yield self.locator.get_info('PluginLogsResponse', res)

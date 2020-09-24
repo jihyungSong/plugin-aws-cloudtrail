@@ -1,1 +1,1 @@
-from spaceone.monitoring.connector.cloudtrail_connector import CloudTrailConnector
+from spaceone.monitoring.connector.aws_boto_connector.cloudtrail import CloudTrail
